@@ -8,7 +8,8 @@ documentation.
 
 * **Template Class**: Both the `Node` and the `SinglyLinkedList` classes are implemented as template classes, allowing
   them to work with various data types. This provides flexibility and reusability.
-* **Friend Keyword**: The `Node` class uses the `friend` keyword to allow the `SinglyLinkedList` class to access its private
+* **Friend Keyword**: The `Node` class uses the `friend` keyword to allow the `SinglyLinkedList` class to access its
+  private
   members, promoting encapsulation and data hiding.
 * **Added Tail Field**: A `tail` field is included to enable O(1) access to the last node in the list, improving
   performance for certain operations.
@@ -39,15 +40,39 @@ list.
 int main() {
     DS::SinglyLinkedList<int> list;
 
+    // Insert nodes at the back of the list
     list.insert_back(10);
     list.insert_back(20);
     list.insert_back(30);
 
+    // Display the contents of the list
     list.show(); // Output: {10 => 20 => 30}
 
+    // Remove a node from the list
     list.remove(20);
 
+    // Display the updated contents of the list
     list.show(); // Output: {10 => 30}
+
+    // Insert a node at the front of the list
+    list.insert_front(5);
+
+    // Display the updated contents of the list
+    list.show(); // Output: {5 => 10 => 30}
+
+    // Get the size of the list
+    int size = list.get_size();
+    std::cout << "List size: " << size << std::endl; // Output: List size: 3
+
+    // Clear the list
+    list.clear();
+
+    // Check if the list is empty
+    if (list.is_empty()) {
+        std::cout << "The list is empty." << std::endl;
+    } else {
+        std::cout << "The list is not empty." << std::endl;
+    }
 
     return 0;
 }
