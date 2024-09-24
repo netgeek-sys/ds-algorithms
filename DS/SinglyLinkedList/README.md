@@ -8,7 +8,7 @@ documentation.
 
 * **Template Class**: Both the `Node` and the `SinglyLinkedList` classes are implemented as template classes, allowing
   them to work with various data types. This provides flexibility and reusability.
-* **Friend Keyword**: The `Node` class uses the `friend` keyword to allow other classes to access its private
+* **Friend Keyword**: The `Node` class uses the `friend` keyword to allow the `SinglyLinkedList` class to access its private
   members, promoting encapsulation and data hiding.
 * **Added Tail Field**: A `tail` field is included to enable O(1) access to the last node in the list, improving
   performance for certain operations.
