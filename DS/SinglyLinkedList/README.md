@@ -10,9 +10,6 @@ documentation.
   This provides flexibility and reusability.
 * **Friend Keyword**: The linked list class uses the `friend` keyword to allow other classes to access its private
   members, promoting encapsulation and data hiding.
-
-### Using the Linked List
-
 * **Added Tail Field**: A `tail` field is included to enable O(1) access to the last node in the list, improving
   performance for certain operations.
 * **Namespace**: The linked list is encapsulated within the `DS` (Data Structures) namespace, promoting organization and
