@@ -5,11 +5,9 @@
 #include <stdexcept>
 #include <string>
 
-#include "Object.h"
-
 namespace ds {
     template<typename T>
-    class Queue : public Object {
+    class Queue {
         std::unique_ptr<T[]> queue;
         int capacity;
         int front;

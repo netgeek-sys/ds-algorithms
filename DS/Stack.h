@@ -10,7 +10,7 @@
 
 namespace ds {
     template<typename T>
-    class Stack : public Object {
+    class Stack {
         std::unique_ptr<T[]> stack;
         int capacity;
         int top_index;
