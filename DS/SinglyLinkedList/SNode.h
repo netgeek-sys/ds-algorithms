@@ -8,7 +8,7 @@
 namespace DS {
     // Forward declaration of SinglyLinkedList
     template<typename T>
-    class SinglyLinkedList;
+    class SLinkedList;
 
     /**
      * @class Node
@@ -19,9 +19,9 @@ namespace DS {
      * @tparam T The type of value stored in the node.
      */
     template<typename T>
-    class Node {
+    class SNode {
         T value; ///< The value stored in the node.
-        Node *next; ///< Pointer to the next node in the list.
+        SNode *next; ///< Pointer to the next node in the list.
 
     public:
         /**
@@ -31,18 +31,18 @@ namespace DS {
          *
          * @param value The value to store in the node.
          */
-        explicit Node(const T &value) : value(value), next(nullptr) {}
+        explicit SNode(const T &value) : value(value), next(nullptr) {}
 
         /**
-         * @brief Destructor for the Node.
+         * @brief Destructor for the node.
          */
-        ~Node() = default;
+        ~SNode() = default;
 
         T get_value() const {
             return value;
         }
 
-        friend class SinglyLinkedList<T>; // Granting SinglyLinkedList access to Node's private members.
+        friend class SLinkedList<T>; // Granting SinglyLinkedList access to SNode's private members.
     };
 } // DS
 

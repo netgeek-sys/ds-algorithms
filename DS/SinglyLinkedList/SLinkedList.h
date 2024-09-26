@@ -2,17 +2,17 @@
 // Created by Zakaria Mehamdia on 24/09/2024.
 //
 
-#ifndef SINGLYLINKEDLIST_H
-#define SINGLYLINKEDLIST_H
+#ifndef SLINKEDLIST_H
+#define SLINKEDLIST_H
 
 #include <cstddef>
 #include <stdexcept>
 
-#include "Node.h"
+#include "SNode.h"
 
 namespace DS {
     /**
-     * @class SinglyLinkedList
+     * @class SLinkedList
      * @brief A singly linked list implementation.
      *
      * This class provides basic functionality to manage a singly linked list,
@@ -21,9 +21,9 @@ namespace DS {
      * @tparam T The type of elements stored in the linked list.
      */
     template<typename T>
-    class SinglyLinkedList {
-        Node<T> *head; ///< Pointer to the first node in the list.
-        Node<T> *tail; //< Pointer to the last node in the list.
+    class SLinkedList {
+        SNode<T> *head; ///< Pointer to the first node in the list.
+        SNode<T> *tail; //< Pointer to the last node in the list.
         std::size_t size; //< Number of nodes in the list.
 
     public:
@@ -32,14 +32,14 @@ namespace DS {
          *
          * Initializes the list with no nodes and size set to 0.
          */
-        explicit SinglyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
+        explicit SLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
         /**
          * @brief Destructor that deallocates all nodes in the list.
          *
          * Frees the memory for each node in the list to prevent memory leaks.
          */
-        ~SinglyLinkedList() {
+        ~SLinkedList() {
             clear();
         }
 
@@ -97,7 +97,7 @@ namespace DS {
          * @param value The value to store in the new node.
          */
         void insert_front(const T &value) {
-            auto *new_node = new Node<T>(value);
+            auto *new_node = new SNode<T>(value);
 
             // Set the next pointer of the new node to the current head
             new_node->next = head;
@@ -121,7 +121,7 @@ namespace DS {
          * @param value The value to store in the new node.
          */
         void insert_back(const T &value) {
-            auto *new_node = new Node<T>(value);
+            auto *new_node = new SNode<T>(value);
 
             if (is_empty()) {
                 // If the list is empty, set the new node as both the head and tail
@@ -142,12 +142,12 @@ namespace DS {
          * @param value The value to be stored in the new node.
          * @throws std::runtime_error If the target node is null.
          */
-        void insert_after(Node<T> *target, const T &value) {
+        void insert_after(SNode<T> *target, const T &value) {
             if (target == nullptr) {
                 throw std::runtime_error("Target node cannot be null when inserting a new node.");
             }
 
-            auto new_node = new Node<T>(value);
+            auto new_node = new SNode<T>(value);
             auto after_target = target->next; // Store the original next node
             target->next = new_node; // Set the new node as the next node of the target
 
@@ -171,7 +171,7 @@ namespace DS {
                 throw std::runtime_error("Empty singly linked list");
             }
 
-            const Node<T> *old_head = head;
+            const SNode<T> *old_head = head;
             head = old_head->next;
             delete old_head;
             --size;
@@ -197,8 +197,8 @@ namespace DS {
                 throw std::runtime_error("Cannot remove a target node with a null reference.");
             }
 
-            Node<T> *curr_node = head;
-            Node<T> *prev_node = head;
+            SNode<T> *curr_node = head;
+            SNode<T> *prev_node = head;
 
             // Check if the head node is the one to be removed
             if (curr_node->value == value) {
@@ -234,7 +234,7 @@ namespace DS {
          * @param value The value to search for in the linked list.
          * @return A pointer to the node with the matching value, or `nullptr` if not found.
          */
-        Node<T> *find(const T &value) const {
+        SNode<T> *find(const T &value) const {
             auto iter = head;
 
             while (iter != nullptr) {
@@ -275,7 +275,7 @@ namespace DS {
                 std::cout << iter->value;
 
                 if (iter->next != nullptr) {
-                    std::cout << " => ";
+                    std::cout << " -> ";
                 }
 
                 iter = iter->next;
@@ -286,4 +286,4 @@ namespace DS {
     };
 } // DS
 
-#endif //SINGLYLINKEDLIST_H
+#endif //SLINKEDLIST_H
