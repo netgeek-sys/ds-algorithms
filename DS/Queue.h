@@ -15,8 +15,7 @@ namespace ds {
         int size;
 
     public:
-        explicit Queue(int capacity) : queue(new T[capacity]), capacity(capacity), front(0), rear(-1), size(0) {
-        }
+        explicit Queue(int capacity) : queue(new T[capacity]), capacity(capacity), front(0), rear(-1), size(0) {}
 
         ~Queue() override = default;
 
@@ -58,7 +57,7 @@ namespace ds {
             return popped;
         }
 
-        std::string to_str() const override {
+        std::string to_str() const {
             std::string str = "{";
 
             if (!is_empty()) {
