@@ -166,6 +166,31 @@ namespace DS {
         }
 
         /**
+         * @brief Removes the last node from the list.
+         *
+         * Deallocates the memory of the removed node. If the list becomes empty, both head and tail are set to nullptr.
+         *
+         * @throws std::runtime_error if the list is empty.
+         */
+        void remove_last() {
+            if (is_empty()) {
+                throw std::runtime_error("Cannot remove from an empty list.");
+            }
+
+            const DNode<T> *old_tail = tail;
+
+            if (size == 1) {
+                head = tail = nullptr; ///< Only one node in the list.
+            } else {
+                tail = old_tail->prev;
+                tail->next = nullptr;
+            }
+
+            delete old_tail;
+            --size;
+        }
+
+        /**
          * @brief Removes the first node with the given value.
          * @param value The value of the node to remove.
          * @return true if the node was found and removed, false otherwise.
