@@ -268,10 +268,10 @@ namespace DS {
          * @brief Returns a pointer to the node at the specified position in the list.
          *
          * @param index The position of the node to retrieve (0-indexed).
-         * @return A pointer to the node at the specified position.
+         * @return A pointer to the node at the specified position; otherwise, \code nullptr\endcode if not found
          * @throws std::out_of_range If the list is empty or the position is out of range.
          */
-        DNode<T> *at(std::size_t index) {
+        DNode<T> *get_node_at(const std::size_t index) {
             if (is_empty()) {
                 throw std::out_of_range("The list is empty");
             }
@@ -329,6 +329,24 @@ namespace DS {
                     end = end->prev;
                 }
             }
+        }
+
+        /**
+         * @brief Updates the value of the node at the specified index in the list.
+         *
+         * This method updates the value of the node at the given index in the doubly linked list.
+         * It throws an exception if the list is empty or if the index is out of range.
+         *
+         * @param index The index of the node to update (0-indexed).
+         * @param new_value The new value to assign to the node at the specified index.
+         * @return A pointer to the node at the specified index with the updated value; otherwise, \code nullptr\endcode if not found
+         * @throws std::out_of_range If the list is empty or the index is out of range.
+         */
+        DNode<T> *update_at(const std::size_t index, const T &new_value) {
+            auto found_node = get_node_at(index);
+            if (found_node == nullptr) return nullptr;
+            found_node->value = new_value;
+            return found_node;
         }
 
         /**
