@@ -141,6 +141,25 @@ namespace DS {
             }
 
             ++size;
+
+            // TODO: return DNode * instead
+        }
+
+        /**
+         * @brief Inserts a new node with the given value after the node at the specified index.
+         *
+         * This method inserts a new node with the given value after the node at the specified index in the list.
+         * If the index is out of range, the method does nothing.
+         *
+         * @param index The index of the node after which to insert the new node (0-indexed).
+         * @param value The value to assign to the new node.
+         */
+
+        void insert_after_at(const std::size_t index, const T &value) {
+            auto found_node = get_node_at(index);
+            if (found_node == nullptr) return;
+            insert_after(found_node, value);
+            // TODO: return DNode * instead
         }
 
         /**
