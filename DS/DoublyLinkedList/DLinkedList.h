@@ -258,6 +258,79 @@ namespace DS {
             return nullptr; ///< Node with the given value not found.
         }
 
+        void swap_values(DNode<T> *n1, DNode<T> *n2) {
+            auto temp = n1->value;
+            n1->value = n2->value;
+            n2->value = temp;
+        }
+
+        /**
+         * @brief Returns a pointer to the node at the specified position in the list.
+         *
+         * @param index The position of the node to retrieve (0-indexed).
+         * @return A pointer to the node at the specified position.
+         * @throws std::out_of_range If the list is empty or the position is out of range.
+         */
+        DNode<T> *at(std::size_t index) {
+            if (is_empty()) {
+                throw std::out_of_range("The list is empty");
+            }
+
+            if (index < 0 || index >= size) {
+                throw std::out_of_range("The provided position argument is out of range");
+            }
+
+            const std::size_t mid = (size - 1) / 2; /// Calculate the midpoint of the list
+            DNode<T> *current_node = nullptr;
+
+            // Iterate from the head or tail of the list, depending on the position
+            if (index <= mid) {
+                current_node = head;
+                for (std::size_t node_index = 0; node_index <= mid; ++node_index) {
+                    if (node_index == index) {
+                        return current_node;
+                    }
+                    current_node = current_node->next;
+                }
+            } else {
+                current_node = tail;
+                for (std::size_t node_index = size - 1; node_index > mid; --node_index) {
+                    if (node_index == index) {
+                        return current_node;
+                    }
+                    current_node = current_node->prev;
+                }
+            }
+            return nullptr;
+        }
+
+        /**
+         * Reverses the linked list in-place.
+         *
+         * This method swaps the values of nodes from both ends of the list towards the center,
+         * effectively reversing the list.
+         *
+         * @throws std::runtime_error if the list is empty
+         */
+        void reverse() {
+            if (is_empty()) {
+                throw std::runtime_error("Cannot reverse an empty list.");
+            }
+
+            if (size > 1) {
+                auto start = head;
+                auto end = tail;
+                auto half_size = size / 2;
+
+                // Perform halfSize number of swaps to reverse the list
+                while (half_size-- > 0) {
+                    swap_values(start, end);
+                    start = start->next;
+                    end = end->prev;
+                }
+            }
+        }
+
         /**
          * @brief Clears the list, deleting all nodes.
          */
