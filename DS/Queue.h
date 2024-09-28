@@ -6,7 +6,7 @@
 
 #include "DoublyLinkedList/DLinkedList.h"
 
-namespace ds {
+namespace DS {
     /**
      * @brief A queue data structure implemented using a doubly linked list.
      *
@@ -46,8 +46,8 @@ namespace ds {
          *
          * @return True if the queue is empty, false otherwise.
          */
-        bool is_empty() const {
-            return queue.is_empty();
+        bool empty() const {
+            return queue.empty();
         }
 
         /**
@@ -67,7 +67,7 @@ namespace ds {
          * @throws std::runtime_error If the queue is empty.
          */
         T dequeue() {
-            if (is_empty()) {
+            if (empty()) {
                 throw std::runtime_error("Queue is empty");
             }
             auto value = queue.pop_front();

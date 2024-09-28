@@ -43,7 +43,7 @@ namespace DS {
          * @brief Checks if the list is empty.
          * @return true if the list is empty, false otherwise.
          */
-        bool is_empty() const noexcept {
+        bool empty() const noexcept {
             return size == 0;
         }
 
@@ -53,7 +53,7 @@ namespace DS {
          * @return The value stored in the first node.
          */
         T get_front() const {
-            if (is_empty()) {
+            if (empty()) {
                 throw std::runtime_error("Cannot get the front of an empty list.");
             }
             return head->value;
@@ -65,7 +65,7 @@ namespace DS {
          * @return The value stored in the last node.
          */
         T get_back() const {
-            if (is_empty()) {
+            if (empty()) {
                 throw std::runtime_error("Cannot get the back of an empty list.");
             }
             return tail->value;
@@ -86,7 +86,7 @@ namespace DS {
         void insert_front(const T &value) {
             auto *new_node = new DNode<T>(value);
 
-            if (is_empty()) {
+            if (empty()) {
                 head = tail = new_node;
             } else {
                 new_node->next = head;
@@ -104,7 +104,7 @@ namespace DS {
         DNode<T> *push_back(const T &value) {
             auto *new_node = new DNode<T>(value);
 
-            if (is_empty()) {
+            if (empty()) {
                 head = tail = new_node;
             } else {
                 tail->next = new_node;
@@ -168,11 +168,12 @@ namespace DS {
          * @throws std::runtime_error if the list is empty.
          */
         T pop_front() {
-            if (is_empty()) {
+            if (empty()) {
                 throw std::runtime_error("Cannot remove from an empty list.");
             }
 
             const DNode<T> *old_head = head;
+            T value = old_head->value;
 
             if (size == 1) {
                 head = tail = nullptr; ///< Only one node in the list.
@@ -181,7 +182,6 @@ namespace DS {
                 head->prev = nullptr;
             }
 
-            T value = get_front();
             delete old_head;
             --size;
             return value;
@@ -194,8 +194,8 @@ namespace DS {
          *
          * @throws std::runtime_error if the list is empty.
          */
-        void remove_last() {
-            if (is_empty()) {
+        T remove_last() {
+            if (empty()) {
                 throw std::runtime_error("Cannot remove from an empty list.");
             }
 
@@ -207,9 +207,10 @@ namespace DS {
                 tail = old_tail->prev;
                 tail->next = nullptr;
             }
-
+            auto value = old_tail->get_value();
             delete old_tail;
             --size;
+            return value;
         }
 
         /**
@@ -219,7 +220,7 @@ namespace DS {
          * @throws std::runtime_error if the list is empty.
          */
         bool remove(const T &value) {
-            if (is_empty()) {
+            if (empty()) {
                 throw std::runtime_error("Cannot remove from an empty list.");
             }
 
@@ -294,7 +295,7 @@ namespace DS {
          * @throws std::out_of_range If the list is empty or the position is out of range.
          */
         DNode<T> *get_node_at(const std::size_t index) const {
-            if (is_empty()) {
+            if (empty()) {
                 throw std::out_of_range("The list is empty");
             }
 
@@ -335,7 +336,7 @@ namespace DS {
          * @throws std::runtime_error if the list is empty
          */
         void reverse() {
-            if (is_empty()) {
+            if (empty()) {
                 throw std::runtime_error("Cannot reverse an empty list.");
             }
 
@@ -375,7 +376,7 @@ namespace DS {
          * @brief Clears the list, deleting all nodes.
          */
         void clear() {
-            while (!is_empty()) {
+            while (!empty()) {
                 pop_front(); ///< Remove the front node until the list is empty.
             }
         }

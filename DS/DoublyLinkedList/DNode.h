@@ -33,7 +33,7 @@ namespace DS {
          */
         ~DNode() = default;
 
-        T get_value() const {
+        T get_value() {
             return value;
         }
 
