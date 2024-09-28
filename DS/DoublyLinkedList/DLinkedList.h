@@ -101,7 +101,7 @@ namespace DS {
          * @brief Inserts a new node with the given value at the back of the list.
          * @param value The value to insert.
          */
-        void insert_back(const T &value) {
+        DNode<T> *push_back(const T &value) {
             auto *new_node = new DNode<T>(value);
 
             if (is_empty()) {
@@ -113,6 +113,7 @@ namespace DS {
             }
 
             ++size;
+            return new_node;
         }
 
         /**
@@ -166,7 +167,7 @@ namespace DS {
          * @brief Removes the first node in the list.
          * @throws std::runtime_error if the list is empty.
          */
-        void remove_front() {
+        T pop_front() {
             if (is_empty()) {
                 throw std::runtime_error("Cannot remove from an empty list.");
             }
@@ -180,8 +181,10 @@ namespace DS {
                 head->prev = nullptr;
             }
 
+            T value = get_front();
             delete old_head;
             --size;
+            return value;
         }
 
         /**
@@ -290,7 +293,7 @@ namespace DS {
          * @return A pointer to the node at the specified position; otherwise, \code nullptr\endcode if not found
          * @throws std::out_of_range If the list is empty or the position is out of range.
          */
-        DNode<T> *get_node_at(const std::size_t index) {
+        DNode<T> *get_node_at(const std::size_t index) const {
             if (is_empty()) {
                 throw std::out_of_range("The list is empty");
             }
@@ -373,7 +376,7 @@ namespace DS {
          */
         void clear() {
             while (!is_empty()) {
-                remove_front(); ///< Remove the front node until the list is empty.
+                pop_front(); ///< Remove the front node until the list is empty.
             }
         }
 
@@ -390,7 +393,7 @@ namespace DS {
                 std::cout << iter->value;
 
                 if (iter->next != nullptr) {
-                    std::cout << " <-> ";
+                    std::cout << ", ";
                 }
 
                 iter = iter->next;

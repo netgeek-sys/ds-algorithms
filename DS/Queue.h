@@ -1,76 +1,102 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include <memory>
 #include <stdexcept>
-#include <string>
+#include <cstddef>
+
+#include "DoublyLinkedList/DLinkedList.h"
 
 namespace ds {
+    /**
+     * @brief A queue data structure implemented using a doubly linked list.
+     *
+     * This class provides a basic queue data structure with methods for
+     * enqueueing, dequeueing, peeking, and checking the size of the queue.
+     *
+     * @tparam T The type of elements stored in the queue.
+     */
     template<typename T>
     class Queue {
-        std::unique_ptr<T[]> queue;
-        int capacity;
-        int front;
-        int rear;
-        int size;
+        DS::DLinkedList<T> queue;
 
     public:
-        explicit Queue(int capacity) : queue(new T[capacity]), capacity(capacity), front(0), rear(-1), size(0) {}
+        /**
+         * @brief Constructs an empty queue.
+         */
+        explicit Queue() = default;
 
-        ~Queue() override = default;
-
-        int get_size() const {
-            return rear + 1;
+        /**
+         * @brief Destroys the queue and releases any allocated memory.
+         */
+        ~Queue() {
+            queue.clear();
         }
 
-        int get_capacity() const {
-            return capacity;
+        /**
+         * @brief Returns the number of elements in the queue.
+         *
+         * @return The size of the queue.
+         */
+        std::size_t size() const {
+            return queue.size();
         }
 
+        /**
+         * @brief Checks if the queue is empty.
+         *
+         * @return True if the queue is empty, false otherwise.
+         */
         bool is_empty() const {
-            return size == 0;
+            return queue.is_empty();
         }
 
-        bool is_full() const {
-            return size == capacity;
+        /**
+         * @brief Adds an element to the end of the queue.
+         *
+         * @param value The element to add to the queue.
+         * @return The added element.
+         */
+        T enqueue(const T &value) {
+            return queue.push_back(value)->get_value();
         }
 
-        void enqueue(const T element) {
-            if (is_full()) {
-                throw std::out_of_range("Queue overflow exception");
-            }
-
-            rear = (rear + 1) % capacity;
-            queue[rear] = element;
-            ++size;
-        }
-
+        /**
+         * @brief Removes the front element from the queue.
+         *
+         * @return The removed element.
+         * @throws std::runtime_error If the queue is empty.
+         */
         T dequeue() {
             if (is_empty()) {
-                throw std::out_of_range("Queue underflow exception");
+                throw std::runtime_error("Queue is empty");
             }
-
-            T popped = queue[front];
-            front = (front + 1) % capacity;
-            --size;
-
-            return popped;
+            auto value = queue.pop_front();
+            return value;
         }
 
-        std::string to_str() const {
-            std::string str = "{";
+        /**
+        * @brief Returns the front element of the queue without removing it.
+        *
+        * @return The front element of the queue.
+        */
+        T peek() const {
+            return queue.get_front();
+        }
 
-            if (!is_empty()) {
-                for (int i{front}; i <= rear; ++i) {
-                    str += std::to_string(queue[i]);
+        /**
+         * @brief Returns the back element of the queue.
+         *
+         * @return The back element of the queue.
+         */
+        T back() const {
+            return queue.back();
+        }
 
-                    if (i < rear) {
-                        str += ", ";
-                    }
-                }
-            }
-
-            return str + "}";
+        /**
+         * @brief Prints the elements of the queue to the console.
+         */
+        void show() const {
+            queue.show();
         }
     };
 } // ds
