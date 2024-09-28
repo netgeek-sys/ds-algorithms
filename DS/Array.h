@@ -26,7 +26,7 @@ namespace DS {
         }
 
         bool is_valid_capacity(const int capacity) {
-            return capacity >= 1;
+            return capacity >= 0;
         }
 
     public:
@@ -43,6 +43,10 @@ namespace DS {
             delete[] _array;
             _array = nullptr;
             _capacity = 0;
+        }
+
+        bool empty() const {
+            return _capacity == 0;
         }
 
         // Overloading the [] operator for getter
@@ -67,6 +71,7 @@ namespace DS {
 
         void resize(const int new_capacity) {
             if (!is_valid_capacity(new_capacity)) throw std::runtime_error("Invalid capacity argument");
+            if (empty()) throw std::runtime_error("Array with zero capacity");
             if (new_capacity == _capacity) return;
 
             T *new_array = new T[new_capacity];
@@ -79,6 +84,20 @@ namespace DS {
             clear();
             _array = new_array;
             _capacity = new_capacity;
+        }
+
+        void reverse() {
+            if (empty()) return;
+
+            const int mid = (_capacity - 1) / 2;
+
+            for (int i = 0; i <= mid; ++i) {
+                std::swap(_array[i], _array[_capacity - 1 - i]);
+            }
+        }
+
+        T at(const int index) const {
+            return operator[](index);
         }
 
         void show() {
