@@ -198,6 +198,21 @@ namespace DS {
             remove_at(0, 1);
         }
 
+        int find(const T &value) {
+            for (int i = 0; i < _size; ++i) {
+                if (_array[i] == value) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        void remove(const T &value) {
+            if (const int found_at = find(value); found_at != -1) {
+                remove_at(found_at);
+            }
+        }
+
         void show() {
             std::cout << "{";
             for (int i = 0; i < _size; ++i) {
