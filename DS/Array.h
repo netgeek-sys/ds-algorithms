@@ -5,7 +5,6 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include <cstddef>
 #include <iostream>
 #include <stdexcept>
 #include <algorithm>
@@ -136,7 +135,7 @@ namespace DS {
             }
         }
 
-        void push(const T &value) {
+        void push_back(const T &value) {
             if (full()) {
                 grow();
             }
@@ -196,6 +195,8 @@ namespace DS {
                 throw std::out_of_range("Index out of bounds");
             }
 
+            // TODO: better to check if size is full, if yes then grow
+
             const int new_capacity = full() ? ++_capacity : _capacity;
             const int new_size = _size + 1;
             T *copy_arr = new T[new_capacity];
@@ -217,7 +218,21 @@ namespace DS {
             grow();
         }
 
+        void insert_after(const int index, const T &value) {
+            if (index + 1 < _size) {
+                insert_at(index + 1, value);
+            } else {
+                push_back(value);
+            }
+        }
 
+        void insert_before(const int index, const T &value) {
+            insert_at(index - 1, value);
+        }
+
+        void push_front(const T &value) {
+            insert_at(0, value);
+        }
 
         void pop_back() {
             remove_at(_size - 1, 1);
