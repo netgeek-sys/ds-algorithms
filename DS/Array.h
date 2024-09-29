@@ -44,8 +44,10 @@ namespace DS {
         }
 
         void grow() {
-            const int new_capacity = _capacity == 0 ? 1 : _capacity * 2;
-            resize(new_capacity);
+            if (full()) {
+                const int new_capacity = _capacity == 0 ? 1 : _capacity * 2;
+                resize(new_capacity);
+            }
         }
 
         void shrink() {
@@ -109,7 +111,6 @@ namespace DS {
 
         void resize(const int new_capacity) {
             if (!is_valid_capacity(new_capacity)) throw std::runtime_error("Invalid capacity argument");
-            if (empty()) throw std::runtime_error("Array is empty");
             if (new_capacity == _capacity) return;
 
             T *new_array = new T[new_capacity];
@@ -189,6 +190,34 @@ namespace DS {
             _size = new_size;
             shrink();
         }
+
+        void insert_at(const int index, const T &value) {
+            if (!index_in_bounds(index)) {
+                throw std::out_of_range("Index out of bounds");
+            }
+
+            const int new_capacity = full() ? ++_capacity : _capacity;
+            const int new_size = _size + 1;
+            T *copy_arr = new T[new_capacity];
+
+            for (int i = 0; i < index; ++i) {
+                copy_arr[i] = _array[i];
+            }
+
+            copy_arr[index] = value;
+
+            for (int i = index + 1; i <= _size; ++i) {
+                copy_arr[i] = _array[i - 1];
+            }
+
+            clear();
+            _array = copy_arr;
+            _capacity = new_capacity;
+            _size = new_size;
+            grow();
+        }
+
+
 
         void pop_back() {
             remove_at(_size - 1, 1);
