@@ -101,6 +101,10 @@ namespace DS {
             return stack.get_front();
         }
 
+        void clear() {
+            stack.clear();
+        }
+
         /**
          * @brief Prints the elements of the stack to the console.
          */
